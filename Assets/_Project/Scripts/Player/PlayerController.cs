@@ -13,11 +13,23 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 7f;
-    [SerializeField] private float jumpForce = 10f;
+
+    [Header("Jump")]
+    [SerializeField] private float jumpForce = 6.5f;
+    [Tooltip("On releasing Space while rising, vertical velocity is multiplied by this (0.5 = cut to half) for a moderate, responsive jump cut.")]
+    [SerializeField] private float jumpCutMultiplier = 0.5f;
 
     [Header("Ground Check")]
     [Tooltip("Distance below the collider used to detect the ground.")]
     [SerializeField] private float groundCheckDistance = 0.1f;
+
+    [Header("Combat")]
+    [Tooltip("Projectile prefab spawned when firing (press E).")]
+    [SerializeField] private GameObject projectilePrefab;
+    [Tooltip("Energy resource that gates shooting. Optional: shooting is unlimited if unassigned.")]
+    [SerializeField] private EnergySystem energySystem;
+    [Tooltip("How far ahead of the player the projectile spawns, so it clears the body.")]
+    [SerializeField] private float muzzleOffset = 0.6f;
 
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
@@ -72,6 +84,54 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             Debug.Log("Player Jumping");
         }
+
+        // Variable jump height: releasing Space during ascent cuts the climb (moderate, not abrupt).
+        if (Input.GetKeyUp(KeyCode.Space) && rb.velocity.y > 0f)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpCutMultiplier);
+        }
+
+        // --- Shooting ---
+        ShootProjectile();
+    }
+
+    /// <summary>
+    /// Fires a projectile in the direction the player is facing when E is pressed,
+    /// spending energy if an <see cref="EnergySystem"/> is attached.
+    /// </summary>
+    private void ShootProjectile()
+    {
+        if (!Input.GetKeyDown(KeyCode.E)) return;
+
+        if (projectilePrefab == null)
+        {
+            Debug.LogWarning("PlayerController: projectilePrefab is not assigned.");
+            return;
+        }
+
+        // Gate on energy/cooldown only when an EnergySystem is present.
+        if (energySystem != null && !energySystem.CanShoot())
+        {
+            Debug.Log("No energy available");
+            return;
+        }
+
+        Vector2 direction = new Vector2(facing, 0f);
+        Vector3 spawnPosition = transform.position + (Vector3)(direction * muzzleOffset);
+
+        GameObject projectileObject = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
+        Projectile projectile = projectileObject.GetComponent<Projectile>();
+        if (projectile != null)
+        {
+            projectile.SetDirection(direction);
+        }
+
+        if (energySystem != null)
+        {
+            energySystem.UseEnergy(energySystem.energyCostPerShot);
+        }
+
+        Debug.Log("Shot fired: " + direction);
     }
 
     /// <summary>Flips the sprite by mirroring localScale.x (left = -1, right = 1).</summary>
