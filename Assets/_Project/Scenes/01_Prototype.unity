@@ -1136,9 +1136,10 @@ GameObject:
   - component: {fileID: 268471623}
   - component: {fileID: 268471628}
   - component: {fileID: 268471629}
+  - component: {fileID: 268471630}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1339,6 +1340,19 @@ MonoBehaviour:
   rechargeRate: 15
   energyCostPerShot: 10
   cooldownBetweenShots: 0.2
+--- !u!114 &268471630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 268471622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 522d48601f25849468c38b0a51d2e0e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
 --- !u!1 &403546072
 GameObject:
   m_ObjectHideFlags: 0
@@ -1354,6 +1368,7 @@ GameObject:
   - component: {fileID: 403546073}
   - component: {fileID: 403546078}
   - component: {fileID: 403546079}
+  - component: {fileID: 403546080}
   m_Layer: 0
   m_Name: Enemy_Sentinel_2
   m_TagString: Enemy
@@ -1550,6 +1565,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
+  flashDuration: 0.2
+  flashInterval: 0.05
+  flashColor: {r: 1, g: 0.3, b: 0.3, a: 1}
+--- !u!114 &403546080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403546072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c05d0aea5f07d49d79758dba8fa6bfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireballPrefab: {fileID: 5693149654394086730, guid: 2aa2b3ef01d23485f8f3ae943651c408, type: 3}
+  shootInterval: 1
+  shootOffset: {x: 0.7, y: 0}
+  detectionRange: 5
 --- !u!1 &445992601
 GameObject:
   m_ObjectHideFlags: 0
@@ -4673,6 +4707,7 @@ GameObject:
   - component: {fileID: 1124679833}
   - component: {fileID: 1124679838}
   - component: {fileID: 1124679839}
+  - component: {fileID: 1124679840}
   m_Layer: 0
   m_Name: Enemy_Sentinel_1
   m_TagString: Enemy
@@ -4869,6 +4904,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
+  flashDuration: 0.2
+  flashInterval: 0.05
+  flashColor: {r: 1, g: 0.3, b: 0.3, a: 1}
+--- !u!114 &1124679840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124679832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c05d0aea5f07d49d79758dba8fa6bfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireballPrefab: {fileID: 5693149654394086730, guid: 2aa2b3ef01d23485f8f3ae943651c408, type: 3}
+  shootInterval: 1
+  shootOffset: {x: 0.7, y: 0}
+  detectionRange: 5
 --- !u!1 &1143535944
 GameObject:
   m_ObjectHideFlags: 0

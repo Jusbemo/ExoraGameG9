@@ -19,6 +19,9 @@ public class EnemyPatrol : MonoBehaviour
     private Vector2 target;
     private int facing;   // 0 = unset, 1 = right, -1 = left
 
+    /// <summary>Current travel direction: 1 = right, -1 = left, 0 = not yet determined.</summary>
+    public int Facing => facing;
+
     private void Start()
     {
         // Begin by heading toward waypoint B (to the right).
