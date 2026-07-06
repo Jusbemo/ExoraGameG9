@@ -21,6 +21,17 @@ public class EnemyHealth : MonoBehaviour
     private EnemyPatrol patrol;                  // Cached so we can stop movement on death.
     private Rigidbody2D rb;                      // Cached so we can freeze the body on death.
 
+    [Header("Hit Flash")]
+    [Tooltip("Total time the hit flash lasts.")]
+    [SerializeField] private float flashDuration = 0.2f;
+    [Tooltip("On/off toggle interval during the flash (smaller = faster blinking).")]
+    [SerializeField] private float flashInterval = 0.05f;
+    [Tooltip("Tint applied on each flash 'on' frame.")]
+    [SerializeField] private Color flashColor = new Color(1f, 0.3f, 0.3f, 1f);
+
+    private Color originalColor = Color.white;   // Cached sprite color, restored after each flash.
+    private bool isFlashing = false;             // Prevents overlapping flash coroutines.
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -28,6 +39,8 @@ public class EnemyHealth : MonoBehaviour
         patrol = GetComponent<EnemyPatrol>();
         rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
+
+        if (spriteRenderer != null) originalColor = spriteRenderer.color;
     }
 
     /// <summary>Invoked via SendMessage from Projectile.cs on impact.</summary>
@@ -36,12 +49,40 @@ public class EnemyHealth : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= damage;
+
+        // Visual feedback: brief red flash on each hit (skipped if one is already running).
+        if (!isFlashing && spriteRenderer != null) StartCoroutine(FlashHit());
+
         Debug.Log("Enemy hit! Health: " + currentHealth);
 
         if (currentHealth <= 0)
         {
             Die();
         }
+    }
+
+    /// <summary>
+    /// Flashes the sprite between its original color and <see cref="flashColor"/>
+    /// in on/off pulses for <see cref="flashDuration"/> seconds, then restores it.
+    /// </summary>
+    private IEnumerator FlashHit()
+    {
+        isFlashing = true;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < flashDuration)
+        {
+            // Alternate on/off each interval: on for [0,1), off for [1,2), repeating.
+            bool on = (elapsedTime / flashInterval) % 2f < 1f;
+            spriteRenderer.color = on ? flashColor : originalColor;
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Always restore the exact original color when finished.
+        spriteRenderer.color = originalColor;
+        isFlashing = false;
     }
 
     private void Die()
