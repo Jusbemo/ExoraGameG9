@@ -1437,6 +1437,8 @@ GameObject:
   m_Component:
   - component: {fileID: 166509374}
   - component: {fileID: 166509375}
+  - component: {fileID: 166509377}
+  - component: {fileID: 166509376}
   m_Layer: 0
   m_Name: PICKUP_Checkpoint_T3
   m_TagString: Untagged
@@ -1499,7 +1501,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 8de56241aeb8e4ff388e80dc684b2722, type: 3}
   m_Color: {r: 0.388, g: 0.875, b: 0.306, a: 1}
   m_FlipX: 0
@@ -1511,6 +1513,71 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &166509376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166509373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c8c32e37bd5421a8c75950d40f416c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inactiveColor: {r: 1, g: 1, b: 1, a: 1}
+  activeColor: {r: 0.388, g: 0.874, b: 0.306, a: 1}
+  idleBobAmplitude: 0.15
+  idleBobFrequency: 1.5
+  pulseFrequency: 3
+  pulseMinAlpha: 0.7
+  activationPopDuration: 0.15
+  activationPopScaleMultiplier: 1.3
+--- !u!61 &166509377
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166509373}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.208, y: 0.288}
+  m_EdgeRadius: 0
 --- !u!1 &170590124
 GameObject:
   m_ObjectHideFlags: 0
@@ -7998,6 +8065,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1630936512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1630936513}
+  m_Layer: 0
+  m_Name: SpawnPoint_Start
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1630936513
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630936512}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5, y: -2.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1657414132
 GameObject:
   m_ObjectHideFlags: 0
@@ -8188,6 +8286,9 @@ MonoBehaviour:
   componentsCollected: 0
   totalComponents: 3
   currentObjective: 'Objetivo: reparar la nave'
+  lastCheckpointPosition: {x: 0, y: 0, z: 0}
+  hasActiveCheckpoint: 0
+  initialSpawnPoint: {fileID: 1630936513}
 --- !u!1 &1666916179
 GameObject:
   m_ObjectHideFlags: 0
@@ -9620,6 +9721,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1957341818}
   - component: {fileID: 1957341819}
+  - component: {fileID: 1957341821}
+  - component: {fileID: 1957341820}
   m_Layer: 0
   m_Name: PICKUP_Checkpoint_T2
   m_TagString: Untagged
@@ -9682,7 +9785,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 8de56241aeb8e4ff388e80dc684b2722, type: 3}
   m_Color: {r: 0.388, g: 0.875, b: 0.306, a: 1}
   m_FlipX: 0
@@ -9694,6 +9797,71 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1957341820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957341817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c8c32e37bd5421a8c75950d40f416c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inactiveColor: {r: 1, g: 1, b: 1, a: 1}
+  activeColor: {r: 0.388, g: 0.874, b: 0.306, a: 1}
+  idleBobAmplitude: 0.15
+  idleBobFrequency: 1.5
+  pulseFrequency: 3
+  pulseMinAlpha: 0.7
+  activationPopDuration: 0.15
+  activationPopScaleMultiplier: 1.3
+--- !u!61 &1957341821
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957341817}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.208, y: 0.288}
+  m_EdgeRadius: 0
 --- !u!1 &1972340641
 GameObject:
   m_ObjectHideFlags: 0
@@ -10113,3 +10281,4 @@ SceneRoots:
   - {fileID: 52341251}
   - {fileID: 1657414137}
   - {fileID: 1135794233}
+  - {fileID: 1630936513}
