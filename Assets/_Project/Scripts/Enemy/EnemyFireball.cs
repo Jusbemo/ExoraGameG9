@@ -12,7 +12,7 @@ public class EnemyFireball : MonoBehaviour
 {
     [Header("Ballistics")]
     [Tooltip("Travel speed in units per second.")]
-    public float speed = 12f;
+    public float speed = 5f;
     [Tooltip("Seconds the fireball lives before self-destructing if it hits nothing.")]
     public float lifetime = 3f;
     [Tooltip("Damage dealt to the player on impact.")]

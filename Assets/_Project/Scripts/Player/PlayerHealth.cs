@@ -35,4 +35,20 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player died!");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    public void Heal(int amount)
+    {
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        Debug.Log($"Player healed +{amount}. Health: {currentHealth}/{maxHealth}");
+    }
+
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
 }

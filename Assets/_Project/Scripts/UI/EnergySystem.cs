@@ -55,4 +55,20 @@ public class EnergySystem : MonoBehaviour
     {
         return maxEnergy > 0f ? currentEnergy / maxEnergy : 0f;
     }
+
+    public void AddEnergy(float amount)
+    {
+        currentEnergy = Mathf.Min(currentEnergy + amount, maxEnergy);
+        Debug.Log($"Energy restored +{amount}. Energy: {currentEnergy}/{maxEnergy}");
+    }
+
+    public float GetCurrentEnergy()
+    {
+        return currentEnergy;
+    }
+
+    public float GetMaxEnergy()
+    {
+        return maxEnergy;
+    }
 }
