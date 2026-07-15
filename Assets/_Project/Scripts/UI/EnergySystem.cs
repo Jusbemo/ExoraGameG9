@@ -2,8 +2,8 @@ using UnityEngine;
 
 /// <summary>
 /// Minimalist energy resource used to gate the player's shooting.
-/// Energy recharges over time, is spent per shot, and enforces a cooldown
-/// between shots. Exposes a normalized value for a future HUD.
+/// Energy is spent per shot, only restored via AddEnergy (energy cell pickups),
+/// and enforces a cooldown between shots. Exposes a normalized value for a future HUD.
 /// </summary>
 public class EnergySystem : MonoBehaviour
 {
@@ -12,8 +12,6 @@ public class EnergySystem : MonoBehaviour
     public float maxEnergy = 100f;
     [Tooltip("Current energy. Auto-filled to maxEnergy on Awake.")]
     public float currentEnergy;
-    [Tooltip("Energy regained per second.")]
-    public float rechargeRate = 15f;
     [Tooltip("Energy consumed by a single shot.")]
     public float energyCostPerShot = 10f;
     [Tooltip("Minimum seconds between two shots (caps fire rate).")]
@@ -25,15 +23,6 @@ public class EnergySystem : MonoBehaviour
     private void Awake()
     {
         currentEnergy = maxEnergy;
-    }
-
-    private void Update()
-    {
-        // Slowly recharge, clamped to the maximum.
-        if (currentEnergy < maxEnergy)
-        {
-            currentEnergy = Mathf.Min(currentEnergy + rechargeRate * Time.deltaTime, maxEnergy);
-        }
     }
 
     /// <summary>True when there is enough energy AND the cooldown has elapsed.</summary>
