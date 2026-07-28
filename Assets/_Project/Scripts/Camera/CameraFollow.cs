@@ -16,6 +16,24 @@ public class CameraFollow : MonoBehaviour
 
     public void SetTarget(Transform newTarget) => target = newTarget;
 
+    private void Start()
+    {
+        // Auto-resolve the target so this prefab can be dropped into any scene
+        // without wiring the reference by hand in the Inspector.
+        if (target != null) return;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            target = player.transform;
+            Debug.Log("[CameraFollow] Player found automatically");
+        }
+        else
+        {
+            Debug.LogWarning("[CameraFollow] No Player found in scene. Camera target remains null.");
+        }
+    }
+
     private void LateUpdate()
     {
         if (target == null) return;
