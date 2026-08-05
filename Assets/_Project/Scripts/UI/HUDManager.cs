@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -23,9 +24,15 @@ public class HUDManager : MonoBehaviour
     private static readonly Color ENERGY_ACTIVE = new Color(0.910f, 0.607f, 0.235f, 1f);
     private static readonly Color ENERGY_INACTIVE = new Color(0.016f, 0.263f, 0.333f, 0.4f);
 
+    private Vector3 objectiveBaseScale = Vector3.one;
+    private Vector3 counterBaseScale = Vector3.one;
+    private Coroutine objectivePunchRoutine;
+    private Coroutine counterPunchRoutine;
+
     private void Start()
     {
         ResolvePlayerReferences();
+        StyleHudText();
 
         // The HUD prefab may be dropped into a scene that has no GameManager yet.
         if (GameManager.Instance == null)
@@ -39,6 +46,28 @@ public class HUDManager : MonoBehaviour
 
         UpdateComponentCounter();
         UpdateObjective();
+    }
+
+    /// <summary>
+    /// Replaces the flat white HUD labels with EXORA's palette (see
+    /// ExoraPalette) and a slow glow pulse on the objective text, so it reads
+    /// as a "live" HUD element instead of static text.
+    /// </summary>
+    private void StyleHudText()
+    {
+        if (objectiveText != null)
+        {
+            objectiveText.fontStyle = FontStyles.Bold;
+            objectiveBaseScale = objectiveText.transform.localScale;
+            StartCoroutine(UIAnimator.PulseColor(objectiveText, ExoraPalette.Accent, Color.white, 3f));
+        }
+
+        if (componentCounterText != null)
+        {
+            componentCounterText.fontStyle = FontStyles.Bold;
+            componentCounterText.color = ExoraPalette.Accent;
+            counterBaseScale = componentCounterText.transform.localScale;
+        }
     }
 
     /// <summary>
@@ -108,6 +137,7 @@ public class HUDManager : MonoBehaviour
         if (GameManager.Instance == null || componentCounterText == null) return;
 
         componentCounterText.text = $"{GameManager.Instance.GetComponentsCollected()} / {GameManager.Instance.GetTotalComponents()}";
+        Punch(componentCounterText.transform, counterBaseScale, ref counterPunchRoutine);
     }
 
     private void UpdateObjective(string _ = null)
@@ -115,6 +145,19 @@ public class HUDManager : MonoBehaviour
         if (GameManager.Instance == null || objectiveText == null) return;
 
         objectiveText.text = GameManager.Instance.currentObjective;
+        Punch(objectiveText.transform, objectiveBaseScale, ref objectivePunchRoutine);
+    }
+
+    /// <summary>Brief scale punch so a HUD value visibly "announces" a change instead of just swapping text.</summary>
+    private void Punch(Transform target, Vector3 baseScale, ref Coroutine routine)
+    {
+        if (routine != null) StopCoroutine(routine);
+        routine = StartCoroutine(PunchRoutine(target, baseScale));
+    }
+
+    private IEnumerator PunchRoutine(Transform target, Vector3 baseScale)
+    {
+        yield return UIAnimator.ScaleTo(target, baseScale * 1.3f, baseScale, 0.25f, true);
     }
 
     private void OnDestroy()

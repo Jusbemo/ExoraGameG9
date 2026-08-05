@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_Project/Scenes/00_MainMenu.unity
+    guid: 197cd2755c92446798bb3f109d04251d
+  - enabled: 1
     path: Assets/_Project/Scenes/01_PlanetLanding.unity
     guid: 413890de513d545c3b9cf98fc675b21f
   - enabled: 1
